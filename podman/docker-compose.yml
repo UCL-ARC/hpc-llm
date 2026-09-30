@@ -24,5 +24,6 @@ services:
         - ./nginx/llm_proxy.conf:/etc/nginx/default.d/llm_proxy.conf:Z
         - ./certs/nginx.crt:/etc/nginx/nginx.crt:Z
         - ./certs/nginx.key:/etc/nginx/nginx.key:Z
+        - ./logs:/var/log/nginx:Z
       ports:
         - 55555:55555

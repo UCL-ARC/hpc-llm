@@ -17,13 +17,12 @@ services:
               capabilities: [gpu]
   proxy:
     container_name: proxy
-      container_name: proxy
-      image: docker.io/library/nginx:latest
-      volumes:
-        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:Z
-        - ./nginx/llm_proxy.conf:/etc/nginx/default.d/llm_proxy.conf:Z
-        - ./certs/nginx.crt:/etc/nginx/nginx.crt:Z
-        - ./certs/nginx.key:/etc/nginx/nginx.key:Z
-        - ./logs:/var/log/nginx:Z
-      ports:
-        - 55555:55555
+    image: docker.io/library/nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:Z
+      - ./nginx/llm_proxy.conf:/etc/nginx/default.d/llm_proxy.conf:Z
+      - ./certs/nginx.crt:/etc/nginx/nginx.crt:Z
+      - ./certs/nginx.key:/etc/nginx/nginx.key:Z
+      - ./logs:/var/log/nginx:Z
+    ports:
+      - 55555:55555

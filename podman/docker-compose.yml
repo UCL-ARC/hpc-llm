@@ -1,0 +1,28 @@
+name: hpcllm
+
+services:
+  inference:
+    container_name: inference
+    image: docker.io/vllm/vllm-openai:latest
+    ipc: host
+    volumes: 
+      - ./cache:/root/.cache:Z
+    command: '--port 55500 --model RedHatAI/Muse-Glimmer-30B-FP8-block --served-model-name Muse-Glimmer --tool-call-parser muse_glimmer --reasoning-parser muse_glimmer --gpu-memory-utilization 0.95 --max-num-seqs 48 --tensor-parallel-size 2'
+    deploy:
+      resources: 
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 2
+              capabilities: [gpu]
+  proxy:
+    container_name: proxy
+      container_name: proxy
+      image: docker.io/library/nginx:latest
+      volumes:
+        - ./nginx/nginx.conf:/etc/nginx/nginx.conf:Z
+        - ./nginx/llm_proxy.conf:/etc/nginx/default.d/llm_proxy.conf:Z
+        - ./certs/nginx.crt:/etc/nginx/nginx.crt:Z
+        - ./certs/nginx.key:/etc/nginx/nginx.key:Z
+      ports:
+        - 55555:55555

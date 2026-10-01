@@ -9,7 +9,7 @@ services:
     volumes: 
       - ./cache:/root/.cache:Z
     #command: '--port 55500 --model RedHatAI/Muse-Glimmer-30B-FP8-block --served-model-name Muse-Glimmer --tool-call-parser muse_glimmer --reasoning-parser muse_glimmer --gpu-memory-utilization 0.95 --max-num-seqs 48 --tensor-parallel-size 2'
-    command: '--port 55500 --host 0.0.0.0 -hf ggml-org/gpt-oss-20b-GGUF -a gpt-oss-20b -sm layer'
+    command: '--port 55500 --host 0.0.0.0 -hf ggml-org/gpt-oss-20b-GGUF -a gpt-oss-20b -sm layer --jinja'
     shm_size: "16gb"
 
     deploy:

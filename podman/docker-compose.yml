@@ -3,11 +3,15 @@ name: hpcllm
 services:
   inference:
     container_name: inference
-    image: docker.io/vllm/vllm-openai:latest
+    #image: docker.io/vllm/vllm-openai:latest
+    image: ghcr.io/ggml-org/llama.cpp:server-cuda
     ipc: host
     volumes: 
       - ./cache:/root/.cache:Z
-    command: '--port 55500 --model RedHatAI/Muse-Glimmer-30B-FP8-block --served-model-name Muse-Glimmer --tool-call-parser muse_glimmer --reasoning-parser muse_glimmer --gpu-memory-utilization 0.95 --max-num-seqs 48 --tensor-parallel-size 2'
+    #command: '--port 55500 --model RedHatAI/Muse-Glimmer-30B-FP8-block --served-model-name Muse-Glimmer --tool-call-parser muse_glimmer --reasoning-parser muse_glimmer --gpu-memory-utilization 0.95 --max-num-seqs 48 --tensor-parallel-size 2'
+    command: '--port 55500 --host 0.0.0.0 -hf ggml-org/gpt-oss-20b-GGUF -a gpt-oss-20b -sm layer'
+    shm_size: "16gb"
+
     deploy:
       resources: 
         reservations:
